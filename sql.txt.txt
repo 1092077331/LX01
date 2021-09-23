@@ -1,59 +1,65 @@
-DROP DATABASE IF EXISTS 有效；
+DROP DATABASE IF EXISTS Works;
 CREATE DATABASE Works DEFAULT CHARSET=GBK;
 
-使用作品；
-创建表用户信息
+USE Works;
+CREATE TABLE UserInfo
 (
-用户名 nvarchar(50) 主键，
-密码 nvarchar(50) 不为空，
+UserName nvarchar(50) Primary key,
+Password nvarchar(50) not null,
 QQ nvarchar(12),
-电子邮件 nvarchar(50),
-输入 nchar(10) 不为空，
+Email nvarchar(50),
+Type nchar(10) not null,
 UserImg nvarchar(250)
 );
 
-创建表活动
+CREATE TABLE Activity
 (
-ActivityID int(4) 主键 auto_increment，
-ActivitName nvarchar(125) 不为空，
-EndTime datetime(6) 不为空，
-ActivityPicture nvarchar(250) 不为空，
-活动介绍 nvarchar(8000),
-摘要 nvarchar (250),
+ActivityID int(4) Primary KEY auto_increment,
+ActivitName nvarchar(125) not null,
+EndTime datetime(6) not null,
+ActivityPicture nvarchar(250) not null,
+ActivityIntroduction nvarchar(8000),
+Summary nvarchar (250),
 ActivityVerify nchar(10) not null DEFAULT '´ýÉóºË',
-活动状态 nchar(10),
-用户名 nvarchar(50) 不为空
+ActivityStatus nchar(10),
+UserName nvarchar(50) not null
 );
 
-创建表工作信息
+CREATE TABLE WorkInfo
 (
-WorkID int(4) 主键，
-WorkName nvarchar(50) 不为空，
-WorkPicture nvarchar(250) 不为空，
-UploadTime datetime(6) 不为空，
-工作介绍 nvarchar(8000),
+WorkID int(4) Primary KEY,
+WorkName nvarchar(50) not null,
+WorkPicture nvarchar(250) not null,
+UploadTime datetime(6) not null,
+WorkIntroduction nvarchar(8000),
 WorkVerify nchar(10) not NULL DEFAULT '´ýÉóºË',
-用户名 nvarchar(50) 不为空，
-活动名称 nvarchar(125),
-推荐 nchar(2) 不为空，
-RecommendTime 日期时间(6)
+UserName nvarchar(50) not null,
+ActivityName nvarchar(125),
+Recommend nchar(2) not null,
+RecommendTime dateTime(6)
 );
 
-CREATE TABLE COMmeut
+CREATE TABLE Commeut
 (
 CommentID int(4) PRIMARY KEY auto_increment,
-WordID int(4) 不为空，
-WordName nvarchar(50) 不为空，
-用户名 nvarchar(50) 不为空，
-CommentContent nvarchar(8000) 不为空，
-CommentTime dateTime(6) 不为空
+WordID int(4) not null,
+WordName nvarchar(50) not null,
+UserName nvarchar(50) not null,
+CommentContent nvarchar(8000) not null,
+CommentTime dateTime(6) not null
 );
 
-创建表图像
+CREATE TABLE Image
 (
 ImgID int(4) PRIMARY KEY auto_increment,
-ImgUrl nvarchar(50) 不为空，
-ImgText nvarchar(50) 不为空，
-ImgLink nvarchar(100) 不为空，
-ImgAlt nvarchar(50) 不为空
+ImgUrl nvarchar(50) not null,
+ImgText nvarchar(50) not null,
+ImgLink nvarchar(100) not null,
+ImgAlt nvarchar(50) not null
 );
+ALTER TABLE WorkInfo
+ADD FOREIGN KEY(UserName) REFERENCES UserInfo(UserName)
+
+
+ALTER TABLE Commeut
+ADD FOREIGN KEY(UserName) REFERENCES WorkInfo(UserName);
